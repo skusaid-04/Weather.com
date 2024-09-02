@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather.com</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div id="weatherdata">
+        <nav>
+            <div class="navbar">
+                <div class="logo "><img src="Weather.com.png" alt="" srcset=""></div>
+                <form class="search-box" action="#">
+                    <input type="text" id="searchName" placeholder="Enter city name with state name" required>
+                    <button id="searchicon"><i class="fas fa-search search-icon"></i></button>
+                </form>
+            </div>
+        </nav>
+        <div class="section">
+            <div class="container">
+                <div class="date-time-location">
+                    <div class="date">Today <span id="currentdate"></span></div>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i>
+                        <div id="cityname">
+                            
+                        </div>
+                        <div class="time" id="tme"></div>
+                    </div>
+                </div>
+
+                <div class="temp-weather">
+                    <div class="temperature" id="temp"></div>
+                    <div class="wIcon">
+                        <div id="icon"></div>
+                        <div id="desc"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="weather-info">
+            <div class="weekly box-styling">
+                <p class="bold">Upcoming weather forecast</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Weather</th>
+                            <th>Temp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="other-info">
+                <div class="today box-styling">
+                    <p class="bold">Today's Hourly Weather Forecast</p>
+                    <canvas id="weatherChart" height="100"></canvas>
+                </div>
+                <div class="other-today-info">
+                    <div class="condition box-styling">
+                        <div class="icon">
+                            Humidity
+                            <img
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACc0lEQVR4nO2ZOWgVQRjHf/EsYiGiEQQxxLsQUQQRC5N4FhKsrARBRAS1EEEQo40gYqWENAkJImlEvHJgCCTgQSAgSkBQC0GsvUC8MLoyMAuPZfbtnHkT2T98vGJ3vv/+3szsfDMLpUqVKvU/qgHoAa4B9cxQzQEeA4mMW8xQXayASONQQL8dQIf89ab1wE8FyAdgqU+jCr/v0kP4bvCV+IkCIo2b+NVc4HnG45kc2k7aWwVCxBSwDn86m+NzJmRvpNHnh4HlwNccj29Ao23ibRoQaa8s8wByr8Dnrm3iq5ogIo47QrRq+jTbJH9oANLpCDKu6TMB1Jkmf2QAcsMBYqeBTwK0mBp0GSQ/5wDSbwhyP9S4/Q2stIQQC+ofQ5ApYImp0W2NxFcU7ebJ12XReD5qCJHIOGIKUl/wWhSTfHamzSLglbzeW5C/1xKkB0vtlxXvS2BSPsB2xX2iBx5kTI9VyTtmCTJKYJ3IWZXzypgRS5CRkBCNVUqMp8AsRZtOS5COkCDDBeanLIrSJCd2h4I4rGEuemuFYk5NGEKM26zuOloMfNR8iCFF+7XAZ832n4A1BNJ1w390lyLHZuB9Qbt3wKZQEKuAX4YgL3Im/gLgAvAmc/9roF1eD6Zuy8naVpB3IdAkf6flnOuHJYg4WopG7ZYQaWwkEk06glwiAjU5QiSybqu5DngAEfuQ+bUGOe0BJAm5uE03yGpqrIOehlbNP080yL2zC4go/qLQsCPISSLRFosTkDTexvDGqtR5CwhR1mwlMtUBl4G/mhBfgH1ErDZF+Z2NwRjWDR2Jr0p75EZrQB443JF7DG+fz0qVKlWKf8/UgS5SDHxCAAAAAElFTkSuQmCC">
+                        </div>
+                        <div class="info" id="humidity"></div>
+                    </div>
+                    <div class="condition box-styling">
+                        <div class="icon">
+                            Air Quality
+                            <img
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB+ElEQVR4nO3avY9MURjH8Q9TWFlEp9TZeNnYiJftVMptJBJRWH+AaDayERE91pbeoqFQoVP5A0RBg2IRBLMNIVgdV25yJpnc3F13Z44Zd+Z8k1PO85zfeZ5zf+eeOwwRI5jHIrIejyYuhzl0zXwfBGSFMRdDSKsS+/SeA22V6ZrWqvSLLFb+JCQSWapIgdRakchSaxVIrRWJbChbawmvcA+nsRtrOgn0FzbgKG7iOb4Vcs9iohshZQe1/Ix1O4KQBg7hFn5UPCS+x1VMrTb/KLbjGK7gbUnwFuNt1VqJXbiAD20xfuEhToWqbwpV2onjuIZ3y4g7ibFOVnIHZkqEtKqVr/CJMOF8ITaH0+pZPClM4g3OY2vF3BM4h8f4XYiVL/L1IHw85K5EUcjniu3xNeyFg1irc7ZgGnfwaZlcHQnJJ7UnVOsunuILvuMZbuAI1otPA5M4g/tYCPuuIyG1JauTkKU++kjeGi9Dq8xib8WnYi185GN4FE+tdq/9zz7yEw/Cb7YNko+8DoKnQ+6NVQUlHxGfRvIRyUdKST5SBx8ZDf5wONz8vxgkHxkLx5VHyUdKSO8jkViI9cWq3+8j2VBe0K1EEhKJLFWkQGqtSGSptQa1tZoh0H69ZzLmXzjmKt5F/ctxMYaQkSCmVZlejiYuYV0MIbXgD6w5F2AyTqfiAAAAAElFTkSuQmCC">
+                        </div>
+                        <div class="info" id="airQuality"></div>
+                    </div>
+                    <div class="condition box-styling">
+                        <div class="icon">
+                            UV index
+                            <img src="https://th.bing.com/th/id/OIP.rF7yA0X4iESUEWuZSGFoJgAAAA?rs=1&pid=ImgDetMain">
+                        </div>
+                        <div class="info" id="uvIndex"></div>
+                    </div>
+                    <div class="condition box-styling">
+                        <div class="icon">
+                            Visiblity
+                            <img
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABbElEQVR4nO2VvUoDQRzEfxpEEPxorhEViTaaRtBOBW0EnyJ+xdewFEN8BBsfQTSxsBHfILGwtRBR06iNUfBkcQJ/Qk4uZ3KBcAMDx+zezdzu7B0kSNDDmAc8wBc9abEgAzwDZROgLM2NdRyeDC+ACbEozY11HL7ojOuYNHrvB/C03EUZO5bi3IJMJ0uYFrtyDEeAW9Fdx4p+4My80SWQijPAsYxfRF9aI8aAuXab78iwBqyKNWm7Zt4QcAPcA+PtMl8BPmS2b/SstE9gHRgAzhtaP/pf87RZ7kKT8YLZlno/qsCd6YkLFgnD5hyXAgrXWMxXYAmYBh6lnUQxT+lH4h5QUZi/glY090qhHBaBd+kHURtfBWZCzHdv/KR7joy+CXwB38B2WPMtU661FkIvm7LmjL5nnrfRSuNztI5sQPhD6W/AQphlzBMdebN9s9L6gFPpD8BU0Dfej4kVfTGbHqW4eA0M/kZIkIDu4QeN1a28qLRbWAAAAABJRU5ErkJggg==">
+                        </div>
+                        <div class="info" id="visiblity"></div>
+                    </div>
+                    <div class="condition box-styling">
+                        <div class="icon">
+                            Wind Speed
+                            <i class="fa-solid fa-wind"></i>
+                        </div>
+                        <div class="info" id="windSpeed"></div>
+
+                    </div>
+                    <div class="condition box-styling">
+                        <div class="icon">
+                            Chance of rain
+                            <img
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACT0lEQVR4nO2YTUtVQRjHf3nRTZYSZbd9i8CXFtELrbRWRURB9B2UoGzRPoSsjVZCtO5lU+AX6ANkEEWvhgqCgRBtTCWvUl4Z+B8YQjsz95x7z1jzg+HCZZ7n/J+Z53lmzoFIJBLx5DAwBEwA88Aa8A14CdwCDhE4B4FxoJoyfgPPgP0EyBlgQUJ/AHeBPuAA0CzRp/X/kuZ9B44TWBC/JO4JsC9l/l7tSFVBHSGQdFqQqJuetsOymwXaKJhxaydq4bns71Bwd1pXTaSl01YYu2XgJ7CbghjSapoCzsIDy89D4COwqAC/AE+By0ALdWJCAk5l9HPWoWVXgRngInVgXg8wLTYLe+THrP4NpWw7sBPoBK4C762AbgNN5MiaHOex5edSxDUB/UDFCqZmzOqMKoeXrRXqoHH0WsFc8DU2Kz5mHXp/jpM0lgE9d1q3BucgXshwRZ3lmPLXjJ4casSXEvBBmi65Go3JYA7oJhyu+RzEnUqnlcCCSLQlnS6VUU02v6GxS9rMwZnKJ00+yjYPZFGTWwmPLp/UCjmQ69L2yCe1TLsNiZIOZef2mxT7PcLiinRNuR6ISfut6CIXAn3Aqt6DzvsY3lf0XwsOpqSdWJUe81nJi2brilJRYCca1ABa1Z0GrZpYVxA1XeNbFMBWl8ZGjSnfdPpbzYzowpZ8m6rnWAI+A4/VnZxvupH/iTLwWh+yt624MjCpvH8D7MjoL1dcxRnead6k7LL6yxUXcQmvgLcp83z85YqLuCL95UIs7HpTjoW9ObGwI5FI5N9jAxVHDYbjNNK8AAAAAElFTkSuQmCC">
+                        </div>
+                        <div class="info" id="rainChance"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script src="script.js"></script>
+
+</html>
