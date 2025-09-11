@@ -1,4 +1,4 @@
-const apiKey = "a24d79c0d83d41089ba50319242508";
+const apiKey = "your_api_key";
 const weatherDataEle = document.querySelector("#weatherdata");
 const cityInput = document.getElementById("searchName");
 const formEle = document.getElementsByClassName("search-box");
@@ -227,3 +227,4 @@ document.getElementById('searchicon').addEventListener('click', function (event)
     const cityValue = cityInput.value || city;
     getWeatherData(cityValue);
 });
+
