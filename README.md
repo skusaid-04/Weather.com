@@ -38,4 +38,4 @@ A simple weather dashboard web application that displays current weather, hourly
 
 ## License
 
-This project is
+This project is for educational purposes.
